@@ -1,0 +1,15 @@
+node_modules
+**/test/tmp
+**/test/output/tmp
+coverage
+npm-debug.log
+packages/**/package-lock.json
+
+.tags*
+.DS_Store
+.vscode
+.history
+.nyc_output
+dist
+
+stdout_log_file_*

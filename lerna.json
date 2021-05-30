@@ -1,0 +1,19 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "test/*",
+        "*.md",
+        "packages/i18nc-core/dist/i18nc_core.js"
+      ]
+    },
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  },
+  "npmClient": "npm",
+  "version": "independent"
+}

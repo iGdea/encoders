@@ -1,0 +1,31 @@
+{
+  "name": "htmlencoder",
+  "version": "0.0.0",
+  "description": "htmlencoder",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch":"tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/iGdea/htmlencoder.git"
+  },
+  "keywords": [
+    "htmlEncode",
+    "jsEncode",
+    "urlEncode",
+    "jsonStringify",
+    "input2html"
+  ],
+  "author": "Bacra Woo <bacra.woo@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iGdea/htmlencoder/issues"
+  },
+  "homepage": "https://github.com/iGdea/htmlencoder/tree/master/packages/htmlencoder",
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  }
+}

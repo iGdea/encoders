@@ -1,0 +1,18 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap --no-ci",
+    "ls": "lerna ls",
+    "pub": "lerna version",
+    "pub2": "lerna publish from-package -y",
+    "build": "lerna run build --",
+    "test": "lerna run test --",
+    "test-cov": "nyc --reporter=lcov --reporter=text-summary lerna run test",
+    "watch": "lerna run watch --"
+  },
+  "devDependencies": {
+    "lerna": "^3.20.2",
+    "nyc": "^15.1.0"
+  }
+}
