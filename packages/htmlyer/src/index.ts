@@ -26,12 +26,22 @@ const HtmlEscapeMap: EscapeMap = {
 };
 
 
+function escapeMap2RegExpStr(escapeMap: EscapeMap) {
+    return Object.keys(escapeMap)
+        .map(v => ({
+            '\\': '\\\\',
+            '\n': '\\n',
+            '\r': '\\r',
+        }[v] || v))
+        .join('|');
+}
+
 export const htmlEncode = (function() {
     const escapeMap = {
         ...HtmlEscapeMap,
     };
 
-    const reg = new RegExp(Object.keys(escapeMap).join('|'), 'g');
+    const reg = new RegExp(escapeMap2RegExpStr(escapeMap), 'g');
 
     function rp(all: string) {
         return escapeMap[all] || '';
@@ -63,7 +73,7 @@ export const jsEncode = (function () {
         '`': '\\`',
     };
 
-    const reg = new RegExp(Object.keys(escapeMap).join('|') + '|' + spCharCodes, 'g');
+    const reg = new RegExp(escapeMap2RegExpStr(escapeMap) + '|' + spCharCodes, 'g');
 
     function rp(str: string) {
         return escapeMap[str] || '\\u' + str.charCodeAt(0).toString(16).padStart(4, '0');
@@ -109,7 +119,7 @@ export const input2html = (function() {
         '\r': '',
     };
 
-    const reg = new RegExp(Object.keys(escapeMap).join('|') + '|' + spCharCodes, 'g');
+    const reg = new RegExp(escapeMap2RegExpStr(escapeMap) + '|' + spCharCodes, 'g');
 
     function rp(all: string) {
         return escapeMap[all] || '&#' + all.charCodeAt(0) + ';';
