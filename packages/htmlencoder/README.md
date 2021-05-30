@@ -1,14 +1,14 @@
-htmlEncoder
+htmlyer
 ======
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][npm-url]
 [![NPM License][license-image]][npm-url]
 
-生成翻译函数
+Html encoders
 # Install
 ```
-npm install htmlencoder --save
+npm install htmlyer --save
 ```
 
 # Usage
@@ -20,11 +20,11 @@ const {
     urlEncode,
     jsonStringify,
     input2html,
-} = require('htmlencoder');
+} = require('htmlyer');
 
 ```
 
-[npm-image]: https://img.shields.io/npm/v/htmlencoder.svg
-[downloads-image]: https://img.shields.io/npm/dm/htmlencoder.svg
-[npm-url]: https://www.npmjs.org/package/htmlencoder
-[license-image]: https://img.shields.io/npm/l/htmlencoder.svg
+[npm-image]: https://img.shields.io/npm/v/htmlyer.svg
+[downloads-image]: https://img.shields.io/npm/dm/htmlyer.svg
+[npm-url]: https://www.npmjs.org/package/htmlyer
+[license-image]: https://img.shields.io/npm/l/htmlyer.svg
