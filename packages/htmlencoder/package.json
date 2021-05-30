@@ -1,12 +1,12 @@
 {
   "name": "htmlencoder",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "htmlencoder",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "watch":"tsc --watch"
+    "watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
