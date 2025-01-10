@@ -1,6 +1,6 @@
 {
   "name": "htmlyer",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "htmlyer",
   "main": "dist/index.js",
   "browser": "browser_dist/index.js",
