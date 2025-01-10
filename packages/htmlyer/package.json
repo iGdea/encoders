@@ -3,10 +3,14 @@
   "version": "1.0.1",
   "description": "htmlyer",
   "main": "dist/index.js",
+  "browser": "browser_dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch"
+    "prepack": "npx rimraf dist browser_dist && npm run build --if-present",
+    "build": "npx tsc && npm run build:babel",
+    "build:babel": "npx babel dist --out-dir browser_dist",
+    "watch": "npx --watch",
+    "watch:all": "npx tsc --watch & npm run build:babel -- --watch"
   },
   "repository": {
     "type": "git",
@@ -24,8 +28,5 @@
   "bugs": {
     "url": "https://github.com/iGdea/htmlyer/issues"
   },
-  "homepage": "https://github.com/iGdea/htmlyer/tree/master/packages/htmlyer",
-  "devDependencies": {
-    "typescript": "^4.3.2"
-  }
+  "homepage": "https://github.com/iGdea/htmlyer/tree/master/packages/htmlyer"
 }

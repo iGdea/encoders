@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "lib": ["ES2017"],
+    "module": "commonjs",
+    "strict": true,
+    "target": "es2017",
+    "declaration": true,
+    "sourceMap": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+  ]
+}

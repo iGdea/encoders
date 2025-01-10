@@ -2,133 +2,133 @@ const spCharCodes = '[\\u0000-\\u001F]|\\u00F1|\\u000B|\\u000C|\\u00A0|\\uFEFF|\
 
 
 function getStrValue(str: any): string {
-    if (str === null || str === undefined || typeof str == 'function') {
-        str = '';
-    } else {
-        str += '';
-    }
+  if (str === null || str === undefined || typeof str == 'function') {
+    str = '';
+  } else {
+    str += '';
+  }
 
-    return str;
+  return str;
 }
 
 type EscapeMap = {
-    [word: string]: string
+  [word: string]: string
 };
 
 const HtmlEscapeMap: EscapeMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#x27;',
-    '`': '&#x60;',
-    '\\': '&#92;',
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#x27;',
+  '`': '&#x60;',
+  '\\': '&#92;',
 };
 
 
 function escapeMap2RegExpStr(escapeMap: EscapeMap) {
-    return Object.keys(escapeMap)
-        .map(v => ({
-            '\\': '\\\\',
-            '\n': '\\n',
-            '\r': '\\r',
-        }[v] || v))
-        .join('|');
+  return Object.keys(escapeMap)
+    .map(v => ({
+      '\\': '\\\\',
+      '\n': '\\n',
+      '\r': '\\r',
+    }[v] || v))
+    .join('|');
 }
 
 export const htmlEncode = (function() {
-    const escapeMap = {
-        ...HtmlEscapeMap,
-    };
+  const escapeMap = {
+    ...HtmlEscapeMap,
+  };
 
-    const reg = new RegExp(escapeMap2RegExpStr(escapeMap), 'g');
+  const reg = new RegExp(escapeMap2RegExpStr(escapeMap), 'g');
 
-    function rp(all: string) {
-        return escapeMap[all] || '';
-    }
+  function rp(all: string) {
+    return escapeMap[all] || '';
+  }
 
-    return function(str: any): string {
-        str = getStrValue(str);
-        if (!str) return str;
+  return function(str: any): string {
+    str = getStrValue(str);
+    if (!str) return str;
 
-        return str.replace(reg, rp);
-    };
+    return str.replace(reg, rp);
+  };
 })();
 
 
 export const jsEncode = (function () {
-    // 可以再添加一个\/ 主要是防止// 或则/**/这些组合注释 (有一个地方没有encode，可能会导致一片代码被波及)
-    const escapeMap: EscapeMap = {
-        '\n': '\\n',
-        '\r': '\\r',
-        '\\': '\\\\',
+  // 可以再添加一个\/ 主要是防止// 或则/**/这些组合注释 (有一个地方没有encode，可能会导致一片代码被波及)
+  const escapeMap: EscapeMap = {
+    '\n': '\\n',
+    '\r': '\\r',
+    '\\': '\\\\',
 
-        '/': '\\/',
-        '"': '\\"',
-        "'": "\\'",
-        '>': '\\>',
-        // 增加> | < 防止在script标签中，中xss
-        '<': '\\u003c',
+    '/': '\\/',
+    '"': '\\"',
+    "'": "\\'",
+    '>': '\\>',
+    // 增加> | < 防止在script标签中，中xss
+    '<': '\\u003c',
 
-        '`': '\\`',
-    };
+    '`': '\\`',
+  };
 
-    const reg = new RegExp(escapeMap2RegExpStr(escapeMap) + '|' + spCharCodes, 'g');
+  const reg = new RegExp(escapeMap2RegExpStr(escapeMap) + '|' + spCharCodes, 'g');
 
-    function rp(str: string) {
-        return escapeMap[str] || '\\u' + str.charCodeAt(0).toString(16).padStart(4, '0');
-    }
+  function rp(str: string) {
+    return escapeMap[str] || '\\u' + str.charCodeAt(0).toString(16).padStart(4, '0');
+  }
 
-    return function(str: any): string {
-        str = getStrValue(str);
-        if (!str) return str;
-
-        return str.replace(reg, rp);
-    };
-})();
-
-export function urlEncode(str: any): string {
+  return function(str: any): string {
     str = getStrValue(str);
     if (!str) return str;
 
-    return encodeURIComponent(str);
+    return str.replace(reg, rp);
+  };
+})();
+
+export function urlEncode(str: any): string {
+  str = getStrValue(str);
+  if (!str) return str;
+
+  return encodeURIComponent(str);
 }
 
 
 export const jsonStringify = (function() {
-    const scriptTagReg = /</g;
+  const scriptTagReg = /</g;
 
-    return function(data: any, replacer?: any, space?: string): string {
-        const result = JSON.stringify(data, replacer, space);
-        if (!result) return '';
+  return function(data: any, replacer?: any, space?: string): string {
+    const result = JSON.stringify(data, replacer, space);
+    if (!result) return '';
 
-        // 防</script> xss
-        // 由于stringify本身就会对里面的数据进行一些encode
-        // 而且都是jsEncode类型，所以不担心htmlEncode分支
-        return result.replace(scriptTagReg, '\\u003c');
-    };
+    // 防</script> xss
+    // 由于stringify本身就会对里面的数据进行一些encode
+    // 而且都是jsEncode类型，所以不担心htmlEncode分支
+    return result.replace(scriptTagReg, '\\u003c');
+  };
 })();
 
 
 export const input2html = (function() {
-    const escapeMap: EscapeMap = {
-        ...HtmlEscapeMap,
+  const escapeMap: EscapeMap = {
+    ...HtmlEscapeMap,
 
-        ' ': '&nbsp;',
-        '\n': '<br/>',
-        '\r': '',
-    };
+    ' ': '&nbsp;',
+    '\n': '<br/>',
+    '\r': '',
+  };
 
-    const reg = new RegExp(escapeMap2RegExpStr(escapeMap) + '|' + spCharCodes, 'g');
+  const reg = new RegExp(escapeMap2RegExpStr(escapeMap) + '|' + spCharCodes, 'g');
 
-    function rp(all: string) {
-        return escapeMap[all] || '&#' + all.charCodeAt(0) + ';';
-    }
+  function rp(all: string) {
+    return escapeMap[all] || '&#' + all.charCodeAt(0) + ';';
+  }
 
-    return function(str: any): string {
-        str = getStrValue(str);
-        if (!str) return str;
+  return function(str: any): string {
+    str = getStrValue(str);
+    if (!str) return str;
 
-        return str.replace(reg, rp);
-    };
+    return str.replace(reg, rp);
+  };
 })();
